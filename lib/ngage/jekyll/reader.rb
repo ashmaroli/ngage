@@ -36,16 +36,23 @@ module Jekyll
     # Returns nothing.
     def read_directories(dir = "")
       base = site.in_source_dir(dir)
-
       return unless File.directory?(base)
 
+      dot_dirs = []
+      dot_pages = []
+      dot_static_files = []
+
       dot = Dir.chdir(base) { filter_entries(Dir.entries("."), base) }
-      dot_dirs = dot.select { |file| File.directory?(@site.in_source_dir(base, file)) }
-      dot_files = (dot - dot_dirs)
-      dot_pages = dot_files.select do |file|
-        Utils.has_yaml_header?(@site.in_source_dir(base, file))
+      dot.each do |entry|
+        file_path = @site.in_source_dir(base, entry)
+        if File.directory?(file_path)
+          dot_dirs << entry
+        elsif Utils.has_yaml_header?(file_path)
+          dot_pages << entry
+        else
+          dot_static_files << entry
+        end
       end
-      dot_static_files = dot_files - dot_pages
 
       retrieve_posts(dir)
       retrieve_dirs(base, dir, dot_dirs)
