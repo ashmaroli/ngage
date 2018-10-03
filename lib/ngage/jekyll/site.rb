@@ -94,6 +94,7 @@ module Jekyll
       @post_attr_hash = {}
       @site_data = nil
       @collections = nil
+      @documents = nil
       @docs_to_write = nil
       @regenerator.clear_cache
       @liquid_renderer.reset
@@ -322,7 +323,7 @@ module Jekyll
     #
     # Returns an Array of all Documents
     def documents
-      collections.reduce(Set.new) do |docs, (_, collection)|
+      @documents ||= collections.reduce(Set.new) do |docs, (_, collection)|
         docs + collection.docs + collection.files
       end.to_a
     end
