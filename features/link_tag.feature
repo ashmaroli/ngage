@@ -6,7 +6,7 @@ Feature: Link Tag
   Scenario: Basic site with two pages
     Given I have an "index.md" page that contains "[About my projects]({% link about.md %})"
     And I have an "about.md" page that contains "[Home]({% link index.md %})"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<p><a href=\"/about.html\">About my projects</a></p>" in "_site/index.html"
@@ -15,7 +15,7 @@ Feature: Link Tag
   Scenario: Basic site with custom page-permalinks
     Given I have an "index.md" page that contains "[About my projects]({% link about.md %})"
     And I have an "about.md" page with permalink "/about/" that contains "[Home]({% link index.md %})"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<p><a href=\"/about/\">About my projects</a></p>" in "_site/index.html"
@@ -25,7 +25,7 @@ Feature: Link Tag
     Given I have an "index.md" page that contains "[About my projects]({% link about.md %})"
     And I have an "about.md" page that contains "[Home]({% link index.md %})"
     And I have a configuration file with "permalink" set to "pretty"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<p><a href=\"/about/\">About my projects</a></p>" in "_site/index.html"
@@ -35,7 +35,7 @@ Feature: Link Tag
     Given I have an "index.md" page that contains "[About my projects]({% link about.md %})"
     And I have an "about.md" page that contains "[Home]({% link index.md %})"
     And I have a configuration file with "baseurl" set to "/blog"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<p><a href=\"/about.html\">About my projects</a></p>" in "_site/index.html"
@@ -49,7 +49,7 @@ Feature: Link Tag
     baseurl: /blog
     permalink: pretty
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<p><a href=\"/about/\">About my projects</a></p>" in "_site/index.html"
@@ -58,7 +58,7 @@ Feature: Link Tag
   Scenario: Linking to a ghost file
     Given I have an "index.md" page that contains "[About my projects]({% link about.md %})"
     And I have an "about.md" page that contains "[Contact]({% link contact.md %})"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a non-zero exit status
     And the _site directory should not exist
     And I should see "Could not find document 'contact.md' in tag 'link'" in the build output
@@ -69,7 +69,7 @@ Feature: Link Tag
     And I have a _posts directory
     And I have an "_posts/2018-02-15-metaprogramming.md" page that contains "[Download This]({% link script.txt %})"
     And I have a "script.txt" file that contains "Static Alert!"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<p><a href=\"/about.html\">About my projects</a></p>" in "_site/index.html"

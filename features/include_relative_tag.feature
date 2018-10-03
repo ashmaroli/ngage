@@ -10,7 +10,7 @@ Feature: include_relative Tag
       | title     | date       | content                                         |
       | Star Wars | 2018-09-02 | {% include_relative snippets/welcome_para.md %} |
     And I have an "_posts/snippets/welcome_para.md" file that contains "Welcome back Dear Reader!"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Welcome back Dear Reader!" in "_site/2018/09/02/star-wars.html"
@@ -24,7 +24,7 @@ Feature: include_relative Tag
       | Star Wars | 2018-09-02 | {% include_relative snippets/welcome_para.md %} |
     And I have an "_posts/snippets/welcome_para.md" file that contains "{% include_relative snippets/welcome_para/greeting.md %} Dear Reader!"
     And I have an "_posts/snippets/welcome_para/greeting.md" file that contains "Welcome back"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Welcome back Dear Reader!" in "_site/2018/09/02/star-wars.html"
@@ -35,7 +35,7 @@ Feature: include_relative Tag
     And I have a "index.md" page that contains "{% include_relative snippets/welcome_para.md %}"
     And I have a "snippets/welcome_para.md" file that contains "{% include_relative snippets/welcome_para/greeting.md %} Dear Reader!"
     And I have a "snippets/welcome_para/greeting.md" file that contains "Welcome back"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Welcome back Dear Reader!" in "_site/index.html"

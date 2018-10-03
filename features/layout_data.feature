@@ -19,7 +19,7 @@ Feature: Layout data
       ---
       page content
       """
-    When I run jekyll build
+    When I run ngage build
     Then the "_site/index.html" file should exist
     And I should see "page content layout content" in "_site/index.html"
 
@@ -33,7 +33,7 @@ Feature: Layout data
       {{ content }} foo: {{ layout.foo }}
       """
     And I have an "index.html" page with layout "custom" that contains "page content"
-    When I run jekyll build
+    When I run ngage build
     Then the "_site/index.html" file should exist
     And I should see "page content\n foo: my custom data" in "_site/index.html"
 
@@ -52,7 +52,7 @@ Feature: Layout data
       {{ content }} foo: {{ layout.foo }}
       """
     And I have an "index.html" page with layout "custom" that contains "page content"
-    When I run jekyll build
+    When I run ngage build
     Then the "_site/index.html" file should exist
     And I should see "page content\n foo: my custom data" in "_site/index.html"
 
@@ -83,8 +83,8 @@ Feature: Layout data
       {{ content }}
       """
     And I have an "index.html" page with layout "special" that contains "page content"
-    And I have an "jekyll.html" page with layout "page" that contains "page content"
-    When I run jekyll build
+    And I have an "ngage.html" page with layout "page" that contains "page content"
+    When I run ngage build
     Then the "_site/index.html" file should exist
     And I should see "page content\n foo: 'my special data' bar: 'im special'" in "_site/index.html"
-    And I should see "page content\n foo: '' bar: 'im page'" in "_site/jekyll.html"
+    And I should see "page content\n foo: '' bar: 'im page'" in "_site/ngage.html"

@@ -23,7 +23,7 @@ Feature: Hooks
       site.pages << pageklass.new(site, site.source)
     end
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "mytinypage" in "_site/foo.html"
@@ -37,7 +37,7 @@ Feature: Hooks
       payload['site']['injected'] = 'myparam'
     end
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "myparam!" in "_site/index.html"
@@ -52,7 +52,7 @@ Feature: Hooks
       site.pages.delete_if { |p| p.name == 'page1.html' }
     end
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/page1.html" file should not exist
@@ -69,7 +69,7 @@ Feature: Hooks
     end
     """
     And I have a "page1.html" page that contains "page1"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "page1" in "_site/firstpage.html"
@@ -84,7 +84,7 @@ Feature: Hooks
     end
     """
     And I have a "page1.html" page that contains "page1"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "page1" in "_site/renamed.html"
@@ -99,7 +99,7 @@ Feature: Hooks
     """
     And I have a "page1.html" page that contains "{{ page.myparam }}"
     And I have a "page2.html" page that contains "{{ page.myparam }}"
-    When I run jekyll build
+    When I run ngage build
     Then I should see "special" in "_site/page1.html"
     And I should not see "special" in "_site/page2.html"
 
@@ -112,7 +112,7 @@ Feature: Hooks
       page.output = "{{{{{ #{page.output.chomp} }}}}}"
     end
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should see "{{{{{ WRAP ME }}}}}" in "_site/index.html"
 
   Scenario: Work with a page after writing it to disk
@@ -126,7 +126,7 @@ Feature: Hooks
       FileUtils.mv(filename, "#{filename}.moved")
     end
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should see "HELLO FROM A PAGE" in "_site/index.html.moved"
 
   Scenario: Alter a post right after it is initialized
@@ -142,7 +142,7 @@ Feature: Hooks
     And I have the following posts:
       | title  | date       | layout | content               |
       | entry1 | 2015-03-14 | nil    | {{ page.harold }} |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "pbagrag sbe ragel1." in "_site/2015/03/14/entry1.html"
@@ -166,7 +166,7 @@ Feature: Hooks
       | title  | date       | layout | content          |
       | entry1 | 2015-03-14 | nil    | {{ myvar }} post |
       | entry2 | 2015-03-15 | nil    | {{ myvar }} post |
-    When I run jekyll build
+    When I run ngage build
     Then I should see "old post" in "_site/2015/03/14/entry1.html"
     And I should see "new post" in "_site/2015/03/15/entry2.html"
 
@@ -184,7 +184,7 @@ Feature: Hooks
       | title  | date       | layout | content             |
       | entry1 | 2015-03-14 | nil    | {{ 6 \| times: 7 }} |
       | entry2 | 2015-03-15 | nil    | {{ 6 \| times: 8 }} |
-    When I run jekyll build
+    When I run ngage build
     Then I should see "the answer to life, the universe and everything" in "_site/2015/03/14/entry1.html"
     And I should see "48" in "_site/2015/03/15/entry2.html"
 
@@ -205,7 +205,7 @@ Feature: Hooks
       | title  | date       | layout | content   |
       | entry1 | 2015-03-14 | nil    | entry one |
       | entry2 | 2015-03-15 | nil    | entry two |
-    When I run jekyll build
+    When I run ngage build
     Then I should see "_site/2015/03/14/entry1.html at" in "_site/post-build.log"
     Then I should see "_site/2015/03/15/entry2.html at" in "_site/post-build.log"
 
@@ -222,7 +222,7 @@ Feature: Hooks
     And I have the following posts:
       | title  | date       | layout | content   |
       | entry1 | 2015-03-14 | nil    | entry one |
-    When I run jekyll build
+    When I run ngage build
     Then I should see "{{{{{ WRAP ME }}}}}" in "_site/index.html"
     And I should see "{{{{{ <p>entry one</p> }}}}}" in "_site/2015/03/14/entry1.html"
 
@@ -248,7 +248,7 @@ Feature: Hooks
     end
     """
     And I have a "index.html" page that contains "WRAP ME"
-    When I run jekyll build
+    When I run ngage build
     Then I should see "4 3 1 2 WRAP ME" in "_site/index.html"
 
   Scenario: Alter a document right after it is initialized
@@ -273,7 +273,7 @@ Feature: Hooks
     ---
     {{ site.memes.first.text }}
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "all your base are belong to us" in "_site/index.html"
@@ -300,7 +300,7 @@ Feature: Hooks
     ---
     {{ page.text }}
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<p class=\"meme\">all your base are belong to us" in "_site/memes/doc1.html"
@@ -329,7 +329,7 @@ Feature: Hooks
     ---
     {{ page.text }}
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Wrote document 0" in "_site/document-build.log"
@@ -355,6 +355,6 @@ Feature: Hooks
       {{page.foo}}
       """
     And I have an "index.html" page with layout "custom" that contains "page content"
-    When I run jekyll build
+    When I run ngage build
     Then the "_site/index.html" file should exist
     And I should see "page content\n hello world" in "_site/index.html"

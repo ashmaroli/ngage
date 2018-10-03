@@ -5,7 +5,7 @@ require "helper"
 class TestSite < JekyllUnitTest
   def with_image_as_post
     tmp_image_path = File.join(source_dir, "_posts", "2017-09-01-jekyll-sticker.jpg")
-    FileUtils.cp File.join(Dir.pwd, "docs", "img", "jekyll-sticker.jpg"), tmp_image_path
+    FileUtils.cp test_dir("fixtures", "img", "jekyll-sticker.jpg"), tmp_image_path
     yield
   ensure
     FileUtils.rm tmp_image_path
@@ -76,9 +76,6 @@ class TestSite < JekyllUnitTest
       allow(File).to receive(:directory?).with(theme_dir("_sass")).and_return(true)
       allow(File).to receive(:directory?).with(theme_dir("_layouts")).and_return(true)
       allow(File).to receive(:directory?).with(theme_dir("_includes")).and_return(false)
-      allow(File).to receive(:directory?).with(
-        File.expand_path(".jekyll-cache/Jekyll/Cache/Jekyll--Cache")
-      ).and_return(true)
       site = fixture_site("theme" => "test-theme")
       assert_equal [source_dir("_includes")], site.includes_load_paths
     end

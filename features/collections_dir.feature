@@ -12,7 +12,7 @@ Feature: Collections Directory
     """
     collections_dir: collections
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Random Content." in "_site/2009/03/27/gathered-post.html"
@@ -34,7 +34,7 @@ Feature: Collections Directory
 
     collections_dir: collections
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/puppies/rover.html" file should exist
@@ -57,7 +57,7 @@ Feature: Collections Directory
 
     collections_dir: collections
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/puppies/rover.html" file should exist
@@ -81,7 +81,7 @@ Feature: Collections Directory
 
     collections_dir: collections
     """
-    When I run jekyll build --drafts
+    When I run ngage build --drafts
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/puppies/rover.html" file should exist
@@ -105,7 +105,7 @@ Feature: Collections Directory
 
     collections_dir: collections
     """
-    When I run jekyll build --drafts
+    When I run ngage build --drafts
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/puppies/rover.html" file should exist
@@ -147,7 +147,7 @@ Feature: Collections Directory
     And I have a "gathering/_puppies/static_file.txt" file that contains "Static content."
     And I have a gathering/_puppies/nested directory
     And I have a "gathering/_puppies/nested/static_file.txt" file that contains "Nested Static content."
-    When I run jekyll build --drafts
+    When I run ngage build --drafts
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/puppies/rover-in-gathering.html" file should exist
@@ -176,7 +176,7 @@ Feature: Collections Directory
       puppies:
         output: true
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/puppies/rover.html" file should exist
@@ -201,7 +201,7 @@ Feature: Collections Directory
 
     collections_dir: collections
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/puppies/rover.html" file should exist
@@ -262,7 +262,7 @@ Feature: Collections Directory
       <p>{{ player.title }}: Villain: {{ player.villain }}</p>
     {% endfor %}
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<p>Tony Stark: Manager: true</p>" in "_site/index.html"

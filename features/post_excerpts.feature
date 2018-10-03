@@ -11,7 +11,7 @@ Feature: Post excerpts
     And I have the following posts:
       | title  | date       | layout | content             |
       | entry1 | 2007-12-31 | post   | content for entry1. |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see exactly "<p>content for entry1.</p>" in "_site/index.html"
@@ -24,7 +24,7 @@ Feature: Post excerpts
     And I have the following posts:
       | title  | date       | layout | content             |
       | entry1 | 2007-12-31 | post   | content for entry1. |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the _site/2007 directory should exist
@@ -43,7 +43,7 @@ Feature: Post excerpts
     And I have the following posts:
       | title  | date       | layout | content                                  |
       | entry1 | 2007-12-31 | post   | {{ 'assets/style.css' \| relative_url }} |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the _site/2007 directory should exist
@@ -61,7 +61,7 @@ Feature: Post excerpts
     And I have the following posts:
       | title  | date       | layout | content             |
       | entry1 | 2007-12-31 | post   | content for entry1. |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the _site/2007 directory should exist
@@ -80,7 +80,7 @@ Feature: Post excerpts
       | title           | layout | render_with_liquid | date       | content                                  |
       | Unrendered Post | post   | false              | 2017-07-06 | Liquid is not rendered at {{ page.url }} |
       | Rendered Post   | post   | true               | 2017-07-06 | Liquid is rendered at {{ page.url }}     |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site/2017/07/06 directory should exist
     And the "_site/2017/07/06/unrendered-post.html" file should exist

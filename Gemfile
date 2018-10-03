@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-gemspec :name => "jekyll"
+gemspec
 
 gem "rake", "~> 12.0"
 
 group :development do
   gem "launchy", "~> 2.3"
   gem "pry"
-
-  unless RUBY_ENGINE == "jruby"
-    gem "pry-byebug"
-  end
+  gem "pry-byebug" unless RUBY_ENGINE == "jruby"
 end
 
 #
@@ -22,28 +19,24 @@ group :test do
   gem "httpclient"
   gem "jekyll_test_plugin"
   gem "jekyll_test_plugin_malicious"
+  gem "jruby-openssl" if RUBY_ENGINE == "jruby"
   gem "nokogiri", "~> 1.7"
   gem "rspec"
   gem "rspec-mocks"
-  gem "rubocop", "~> 0.59.0"
+  gem "rubocop-jekyll"
   gem "test-dependency-theme", :path => File.expand_path("test/fixtures/test-dependency-theme", __dir__)
   gem "test-theme", :path => File.expand_path("test/fixtures/test-theme", __dir__)
-
-  gem "jruby-openssl" if RUBY_ENGINE == "jruby"
 end
 
 #
 
 group :test_legacy do
-  if RUBY_PLATFORM =~ %r!cygwin!
-    gem "test-unit"
-  end
-
   gem "minitest"
   gem "minitest-profile"
   gem "minitest-reporters"
   gem "shoulda"
   gem "simplecov"
+  gem "test-unit" if RUBY_PLATFORM =~ %r!cygwin!
 end
 
 #
@@ -85,10 +78,7 @@ end
 #
 
 group :site do
-  if ENV["PROOF"]
-    gem "html-proofer", "~> 3.4"
-  end
-
+  gem "html-proofer", "~> 3.4" if ENV["PROOF"]
   gem "jekyll-avatar"
   gem "jekyll-mentions"
   gem "jekyll-seo-tag"

@@ -1,13 +1,13 @@
 Feature: Site configuration
   As a hacker who likes to blog
-  I want to be able to configure jekyll
+  I want to be able to configure ngage
   In order to make setting up a site easier
 
   Scenario: Change source directory
     Given I have a blank site in "_sourcedir"
     And I have an "_sourcedir/index.html" file that contains "Changing source directory"
     And I have a configuration file with "source" set to "_sourcedir"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Changing source directory" in "_site/index.html"
@@ -15,7 +15,7 @@ Feature: Site configuration
   Scenario: Change destination directory
     Given I have an "index.html" file that contains "Changing destination directory"
     And I have a configuration file with "destination" set to "_mysite"
-    When I run jekyll build
+    When I run ngage build
     Then the _mysite directory should exist
     And I should see "Changing destination directory" in "_mysite/index.html"
 
@@ -26,7 +26,7 @@ Feature: Site configuration
     | key         | value    |
     | source      | <source> |
     | destination | <dest>   |
-    When I run jekyll build
+    When I run ngage build
     Then the <source> directory should exist
     And the "<dest>/index.html" file should <file_exist> exist
     And I should see "markdown" in "<source>/index.md"
@@ -46,7 +46,7 @@ Feature: Site configuration
     And I have an "index.html" file that contains "I want to be included"
     And I have a "Gemfile" file that contains "gem 'include-me'"
     And I have a configuration file with "exclude" set to "['Rakefile', 'README']"
-    When I run jekyll build
+    When I run ngage build
     Then I should see "I want to be included" in "_site/index.html"
     And the "_site/Gemfile" file should exist
     And the "_site/Rakefile" file should not exist
@@ -60,7 +60,7 @@ Feature: Site configuration
       | value    |
       | README   |
       | Rakefile |
-    When I run jekyll build
+    When I run ngage build
     Then I should see "I want to be included" in "_site/index.html"
     And the "_site/Rakefile" file should not exist
     And the "_site/README" file should not exist
@@ -68,7 +68,7 @@ Feature: Site configuration
   Scenario: Use Kramdown for markup
     Given I have an "index.markdown" page that contains "[Google](https://www.google.com)"
     And I have a configuration file with "markdown" set to "kramdown"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<a href=\"https://www.google.com\">Google</a>" in "_site/index.html"
@@ -76,7 +76,7 @@ Feature: Site configuration
   Scenario: Highlight code with rouge
     Given I have an "index.html" page that contains "{% highlight ruby %} puts 'Hello world!' {% endhighlight %}"
     And I have a configuration file with "highlighter" set to "rouge"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Hello world!" in "_site/index.html"
@@ -88,7 +88,7 @@ Feature: Site configuration
     And I have the following post:
       | title | date             | layout  | content                                      |
       | foo   | 2014-04-27 11:34 | default | {% highlight text %} test {% endhighlight %} |
-    When I run jekyll build
+    When I run ngage build
     Then I should not see "highlight(.*)highlight" in "_site/2014/04/27/foo.html"
 
   Scenario: Set time and no future dated posts
@@ -105,7 +105,7 @@ Feature: Site configuration
       | title  | date       | layout | content             |
       | entry1 | 2007-12-31 | post   | content for entry1. |
       | entry2 | 2020-01-31 | post   | content for entry2. |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Page Layout: 1 on 2010-01-01" in "_site/index.html"
@@ -126,7 +126,7 @@ Feature: Site configuration
       | title  | date       | layout | content             |
       | entry1 | 2007-12-31 | post   | content for entry1. |
       | entry2 | 2020-01-31 | post   | content for entry2. |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Page Layout: 2 on 2010-01-01" in "_site/index.html"
@@ -146,7 +146,7 @@ Feature: Site configuration
         | title     | date                   | layout  | content             |
         | entry1    | 2013-04-09 23:22 -0400 | post    | content for entry1. |
         | entry2    | 2013-04-10 03:14 -0400 | post    | content for entry2. |
-      When I run jekyll build
+      When I run ngage build
       Then I should get a zero exit status
       And the _site directory should exist
       And I should see "Page Layout: 2" in "_site/index.html"
@@ -170,7 +170,7 @@ Feature: Site configuration
         | title     | date                   | layout  | content             |
         | entry1    | 2013-04-09 23:22 +0400 | post    | content for entry1. |
         | entry2    | 2013-04-10 03:14 +0400 | post    | content for entry2. |
-      When I run jekyll build
+      When I run ngage build
       Then I should get a zero exit status
     And the _site directory should exist
       And I should see "Page Layout: 2" in "_site/index.html"
@@ -189,7 +189,7 @@ Feature: Site configuration
       | Apples  | 2009-03-27 | An article about apples  |
       | Oranges | 2009-04-01 | An article about oranges |
       | Bananas | 2009-04-05 | An article about bananas |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/2009/04/05/bananas.html" file should exist
@@ -203,7 +203,7 @@ Feature: Site configuration
       | value      |
       | .gitignore |
       | .foo       |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see ".DS_Store" in "_site/.gitignore"
@@ -224,7 +224,7 @@ Feature: Site configuration
       | title  | date       | layout | content             |
       | entry1 | 2007-12-31 | post   | content for entry1. |
       | entry2 | 2020-01-31 | post   | content for entry2. |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Page Layout: 2 on 2010-01-01" in "_site/index.html"
@@ -234,7 +234,7 @@ Feature: Site configuration
   Scenario: arbitrary file reads via layouts
     Given I have an "index.html" page with layout "page" that contains "FOO"
     And I have a "_config.yml" file that contains "layouts: '../../../../../../../../../../../../../../usr/include'"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "FOO" in "_site/index.html"

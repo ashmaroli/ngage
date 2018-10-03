@@ -8,7 +8,7 @@ Feature: Rendering
   Scenario: When receiving bad Liquid
     Given I have a "index.html" page with layout "simple" that contains "{% include invalid.html %}"
     And   I have a simple layout that contains "{{ content }}"
-    When  I run jekyll build
+    When  I run ngage build
     Then  I should get a non-zero exit-status
     And   I should see "Liquid Exception" in the build output
 
@@ -17,7 +17,7 @@ Feature: Rendering
     And   I have a "_includes/invalid.html" file that contains "{% INVALID %}"
     And   I have a "index.html" page with layout "simple" that contains "{% include invalid.html %}"
     And   I have a simple layout that contains "{{ content }}"
-    When  I run jekyll build
+    When  I run ngage build
     Then  I should get a non-zero exit-status
     And   I should see "Liquid Exception: Liquid syntax error \(.+/invalid\.html line 1\): Unknown tag 'INVALID' included in index\.html" in the build output
 
@@ -26,13 +26,13 @@ Feature: Rendering
     And   I have a "_includes/invalid.html" file that contains "{{ site.title | prepend 'Prepended Text' }}"
     And   I have a "index.html" page with layout "simple" that contains "{% include invalid.html %}"
     And   I have a simple layout that contains "{{ content }}"
-    When  I run jekyll build
+    When  I run ngage build
     Then  I should get a non-zero exit-status
     And   I should see "Liquid Exception: Liquid error \(.+/_includes/invalid\.html line 1\): wrong number of arguments (\(given 1, expected 2\)|\(1 for 2\)) included in index\.html" in the build output
 
   Scenario: Rendering a default site containing a file with rogue Liquid constructs
     Given I have a "index.html" page with title "Simple Test" that contains "{{ page.title | foobar }}\n\n{{ page.author }}"
-    When  I run jekyll build
+    When  I run ngage build
     Then  I should get a zero exit-status
     And   I should not see "Liquid Exception:" in the build output
 
@@ -51,7 +51,7 @@ Feature: Rendering
     liquid:
       strict_variables: true
     """
-    When  I run jekyll build
+    When  I run ngage build
     Then  I should get a non-zero exit-status
     And   I should see "Liquid error \(line 3\): undefined variable author in index.html" in the build output
 
@@ -70,14 +70,14 @@ Feature: Rendering
     liquid:
       strict_filters: true
     """
-    When  I run jekyll build
+    When  I run ngage build
     Then  I should get a non-zero exit-status
     And   I should see "Liquid error \(line 3\): undefined filter foobar in index.html" in the build output
 
   Scenario: Render Liquid and place in layout
     Given I have a "index.html" page with layout "simple" that contains "Hi there, Jekyll {{ jekyll.environment }}!"
     And I have a simple layout that contains "{{ content }}Ahoy, indeed!"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Hi there, Jekyll development!\nAhoy, indeed" in "_site/index.html"
@@ -87,7 +87,7 @@ Feature: Rendering
     And I have an "index.coffee" page with layout "simple" that contains "whatever()"
     And I have a configuration file with "gems" set to "[jekyll-coffeescript]"
     And I have a simple layout that contains "{{ content }}Ahoy, indeed!"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should not see "Ahoy, indeed!" in "_site/index.css"
@@ -105,7 +105,7 @@ Feature: Rendering
     | author          | John Doe                                       |
     | collections     | {trials: {output: true}}                       |
     | defaults        | [{scope: {path: ""}, values: {layout: page}}]  |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should not see "Welcome!" in "_site/trials/no-layout.html"
@@ -126,7 +126,7 @@ Feature: Rendering
     | key             | value                     |
     | author          | John Doe                  |
     | collections     | {trials: {output: true}}  |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should not see "Welcome!" in "_site/trials/no-layout.html"
@@ -136,24 +136,24 @@ Feature: Rendering
     And I should not see "Build Warning:" in the build output
 
   Scenario: Render liquid in Sass
-    Given I have an "index.scss" page that contains ".foo-bar { color:{{site.color}}; }"
+    Given I have an "index.scss" page that contains ".foo-bar { color:{{ site.color }}; }"
     And I have a configuration file with "color" set to "red"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see ".foo-bar {\n  color: red; }" in "_site/index.css"
 
   Scenario: Not render liquid in CoffeeScript without explicitly including jekyll-coffeescript
-    Given I have an "index.coffee" page with animal "cicada" that contains "hey='for {{page.animal}}'"
-    When I run jekyll build
+    Given I have an "index.coffee" page with animal "cicada" that contains "hey='for {{ page.animal }}'"
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/index.js" file should not exist
 
   Scenario: Render liquid in CoffeeScript with jekyll-coffeescript enabled
-    Given I have an "index.coffee" page with animal "cicada" that contains "hey='for {{page.animal}}'"
+    Given I have an "index.coffee" page with animal "cicada" that contains "hey='for {{ page.animal }}'"
     And I have a configuration file with "gems" set to "[jekyll-coffeescript]"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "hey = 'for cicada';" in "_site/index.js"

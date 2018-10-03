@@ -18,7 +18,7 @@ Feature: Include tags
       | Allow params with spaces and quotes | 2013-04-07 | html | {% include params.html cool="param with spaces" super="\\"quoted\\"" single='has "quotes"' escaped='\\'single\\' quotes' %} |
       | Parameter syntax                    | 2013-04-12 | html | {% include params.html param1_or_2="value" %}                                                                           |
       | Pass a variable                     | 2013-06-22 | html | {% assign var = 'some text' %}{% include params.html local=var title=page.title %}                                    |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<header>My awesome blog header: myparam</header>" in "_site/2013/03/21/include-files.html"
@@ -44,7 +44,7 @@ Feature: Include tags
     | include_file1 | snippet.html      |
     | include_file2 | parametrized.html |
     And I have an "index.html" page that contains "{% include {{site.include_file1}} %} that {% include {{site.include_file2}} what='parameters' %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "a snippet that works with parameters" in "_site/index.html"
@@ -54,7 +54,7 @@ Feature: Include tags
     And I have an "_includes/one.html" file that contains "one"
     And I have an "_includes/two.html" file that contains "two"
     And I have an "index.html" page with files "[one.html, two.html]" that contains "{% for file in page.files %}{% include {{file}} %} {% endfor %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "one two" in "_site/index.html"
@@ -66,7 +66,7 @@ Feature: Include tags
     | key          | value |
     | include_file | one   |
     And I have an "index.html" page that contains "{% include {{ site.include_file | append: '.html' }} %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "one included" in "_site/index.html"
@@ -78,7 +78,7 @@ Feature: Include tags
     | key          | value |
     | include_file | one   |
     And I have an "index.html" page that contains "{% include {{ site.include_file }}.html %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "one included" in "_site/index.html"
@@ -87,20 +87,20 @@ Feature: Include tags
     Given I have an _includes directory
     And I have an "_includes/one.html" file that contains "include"
     And I have an "index.html" page that contains "{% include one.html %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "include" in "_site/index.html"
     When I wait 1 second
     Then I have an "_includes/one.html" file that contains "include content changed"
-    When I run jekyll build
+    When I run ngage build
     Then I should see "include content changed" in "_site/index.html"
 
   Scenario: Include a file with multiple variables
     Given I have an _includes directory
     And I have an "_includes/header-en.html" file that contains "include"
     And I have an "index.html" page that contains "{% assign name = 'header' %}{% assign locale = 'en' %}{% include {{name}}-{{locale}}.html %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "include" in "_site/index.html"
@@ -109,23 +109,23 @@ Feature: Include tags
     Given I have an _includes directory
     And I have an "_includes/header-en.html" file that contains "include"
     And I have an "index.html" page that contains "{% include ./header-en.html %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a non-zero exit status
     And I should see "Invalid syntax for include tag." in the build output
     When I have an "index.html" page that contains "{% include foo/.header-en.html %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a non-zero exit status
     And I should see "Invalid syntax for include tag." in the build output
     When I have an "index.html" page that contains "{% include //header-en.html %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a non-zero exit status
     And I should see "Invalid syntax for include tag." in the build output
     When I have an "index.html" page that contains "{% include ..header-en.html %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a non-zero exit status
     And I should see "Invalid syntax for include tag." in the build output
     When I have an "index.html" page that contains "{% include header-en.html %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "include" in "_site/index.html"

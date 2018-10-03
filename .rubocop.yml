@@ -1,15 +1,12 @@
----
-
-require:
-  - ./rubocop/jekyll
-
-Jekyll/NoPutsAllowed:
-  Exclude:
-    - rake/*.rake
+require: rubocop-jekyll
+inherit_gem:
+  rubocop-jekyll: .rubocop.yml
 
 AllCops:
   TargetRubyVersion: 2.3
   Include:
+    - Gemfile
+    - ngage.gemspec
     - lib/**/*.rb
     - test/**/*.rb
   Exclude:
@@ -42,32 +39,32 @@ Lint/UnreachableCode:
   Severity: error
 Lint/Void:
   Exclude:
-    - lib/jekyll/site.rb
+    - lib/ngage/jekyll/site.rb
 Metrics/AbcSize:
   Max: 21
 Metrics/BlockLength:
   Exclude:
+    - ngage.gemspec
     - test/**/*.rb
-    - lib/jekyll/configuration.rb
-    - rake/*.rake
+    - lib/ngage/jekyll/configuration.rb
 Metrics/ClassLength:
   Exclude:
     - !ruby/regexp /features\/.*.rb$/
     - !ruby/regexp /test\/.*.rb$/
-    - lib/jekyll/document.rb
-    - lib/jekyll/site.rb
-    - lib/jekyll/commands/serve.rb
-    - lib/jekyll/configuration.rb
+    - lib/ngage/jekyll/document.rb
+    - lib/ngage/jekyll/site.rb
+    - lib/ngage/jekyll/commands/serve.rb
+    - lib/ngage/jekyll/configuration.rb
   Max: 240
 Metrics/CyclomaticComplexity:
   Exclude:
-    - lib/jekyll/utils.rb
-    - lib/jekyll/commands/serve.rb
+    - lib/ngage/jekyll/utils.rb
+    - lib/ngage/jekyll/commands/serve.rb
 Metrics/LineLength:
   Exclude:
+    - ngage.gemspec
     - !ruby/regexp /features\/.*.rb/
     - Rakefile
-    - rake/*.rake
     - Gemfile
   Max: 100
   Severity: warning
@@ -88,17 +85,17 @@ Naming/HeredocDelimiterNaming:
     - test/**/*.rb
 Naming/MemoizedInstanceVariableName:
   Exclude:
-    - lib/jekyll/convertible.rb
-    - lib/jekyll/drops/site_drop.rb
-    - lib/jekyll/drops/unified_payload_drop.rb
-    - lib/jekyll/page_without_a_file.rb
+    - lib/ngage/jekyll/convertible.rb
+    - lib/ngage/jekyll/drops/site_drop.rb
+    - lib/ngage/jekyll/drops/unified_payload_drop.rb
+    - lib/ngage/jekyll/page_without_a_file.rb
 Naming/UncommunicativeMethodParamName:
   AllowedNames:
     - _
 Security/MarshalLoad:
   Exclude:
     - !ruby/regexp /test\/.*.rb$/
-    - lib/jekyll/regenerator.rb
+    - lib/ngage/jekyll/regenerator.rb
 Security/YAMLLoad:
   Exclude:
     - !ruby/regexp /features\/.*.rb/
@@ -120,7 +117,7 @@ Style/DoubleNegation:
   Enabled: false
 Style/FormatStringToken:
   Exclude:
-    - lib/jekyll/utils/ansi.rb
+    - lib/ngage/jekyll/utils/ansi.rb
 Style/GuardClause:
   Enabled: false
 Style/HashSyntax:
@@ -148,7 +145,7 @@ Style/RescueModifier:
   Enabled: false
 Style/SafeNavigation:
   Exclude:
-    - lib/jekyll/document.rb
+    - lib/ngage/jekyll/document.rb
 Style/SignalException:
   EnforcedStyle: only_raise
 Style/StringLiterals:

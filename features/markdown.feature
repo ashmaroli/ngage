@@ -10,7 +10,7 @@ Feature: Markdown
     And I have the following post:
       | title   | date       | content    | type     |
       | Hackers | 2009-03-27 | # My Title | markdown |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Index" in "_site/index.html"
@@ -27,7 +27,7 @@ Feature: Markdown
     And I have the following post:
       | title   | date       | content    | type     |
       | Hackers | 2009-03-27 | # My Title | markdown |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Index" in "_site/index.html"

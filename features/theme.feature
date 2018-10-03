@@ -4,12 +4,12 @@ Feature: Writing themes
   In order to share my awesome style skillz with other Jekyllites
 
   Scenario: Generating a new theme scaffold
-    When I run jekyll new-theme my-cool-theme
+    When I run ngage new-theme my-cool-theme
     Then I should get a zero exit status
     And the my-cool-theme directory should exist
 
   Scenario: Generating a new theme scaffold with a code of conduct
-    When I run jekyll new-theme my-cool-theme --code-of-conduct
+    When I run ngage new-theme my-cool-theme --code-of-conduct
     Then I should get a zero exit status
     And the my-cool-theme directory should exist
     And the "my-cool-theme/CODE_OF_CONDUCT.md" file should exist
@@ -18,7 +18,7 @@ Feature: Writing themes
     Given I have a configuration file with "theme" set to "test-theme"
     And I have a css directory
     And I have a "css/main.scss" page that contains "@import 'test-theme-black';"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see ".sample {\n  color: black; }" in "_site/css/main.css"
@@ -28,7 +28,7 @@ Feature: Writing themes
     And I have an _includes directory
     And I have an "_includes/in_project.html" file that contains "I'm in the project."
     And I have an "index.html" page that contains "{% include in_project.html %} {% include include.html %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "I'm in the project." in "_site/index.html"
@@ -40,7 +40,7 @@ Feature: Writing themes
     And I have an "_layouts/post.html" file that contains "post.html from the project: {{ content }}"
     And I have an "index.html" page with layout "default" that contains "I'm content."
     And I have a "post.html" page with layout "post" that contains "I'm more content."
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "default.html from test-theme: I'm content." in "_site/index.html"
@@ -51,7 +51,7 @@ Feature: Writing themes
     And I have an assets directory
     And I have an "assets/application.coffee" file that contains "From your site."
     And I have an "assets/base.js" file that contains "From your site."
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "From your site." in "_site/assets/application.coffee"
@@ -59,7 +59,7 @@ Feature: Writing themes
 
   Scenario: Requiring dependencies of a theme
     Given I have a configuration file with "theme" set to "test-dependency-theme"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/test.txt" file should exist
@@ -75,7 +75,7 @@ Feature: Writing themes
     And I have a "_layouts/post.html" page with layout "default" that contains "I am a post layout! {{ content }}"
     And I have an _includes directory
     And I have an "_includes/in_project.html" file that contains "I am in the project, not the theme."
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "I am in the project, not the theme." in "_site/2016/04/21/entry2.html"

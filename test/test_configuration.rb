@@ -504,7 +504,7 @@ class TestConfiguration < JekyllUnitTest
     should "ignore newlines in that string entirely from the template file" do
       config = Jekyll.configuration(
         @tester.read_config_file(
-          File.expand_path("../lib/site_template/_config.yml", File.dirname(__FILE__))
+          root_dir("lib", "ngage", "site_template", "_config.yml")
         )
       )
       assert_includes config["description"], "an awesome description"

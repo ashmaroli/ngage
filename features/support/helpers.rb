@@ -1,21 +1,18 @@
 # frozen_string_literal: true
 
-require "fileutils"
-require "jekyll"
-require "time"
-require "safe_yaml/load"
+require_relative "../../lib/ngage"
 
 class Paths
   SOURCE_DIR = Pathname.new(File.expand_path("../..", __dir__))
-  def self.test_dir; source_dir.join("tmp", "jekyll"); end
+  def self.test_dir; source_dir.join("tmp", "ngage"); end
 
-  def self.theme_gem_dir; source_dir.join("tmp", "jekyll", "my-cool-theme"); end
+  def self.theme_gem_dir; source_dir.join("tmp", "ngage", "my-cool-theme"); end
 
-  def self.output_file; test_dir.join("jekyll_output.txt"); end
+  def self.output_file; test_dir.join("ngage_output.txt"); end
 
-  def self.status_file; test_dir.join("jekyll_status.txt"); end
+  def self.status_file; test_dir.join("ngage_status.txt"); end
 
-  def self.jekyll_bin; source_dir.join("exe", "jekyll"); end
+  def self.ngage_bin; source_dir.join("exe", "ngage"); end
 
   def self.source_dir; SOURCE_DIR; end
 end
@@ -69,7 +66,7 @@ end
 
 #
 
-def jekyll_run_output
+def ngage_run_output
   if Paths.output_file.file?
     then return Paths.output_file.read
   end
@@ -77,7 +74,7 @@ end
 
 #
 
-def jekyll_run_status
+def ngage_run_status
   if Paths.status_file.file?
     then return Paths.status_file.read
   end
@@ -97,9 +94,9 @@ end
 
 #
 
-def run_jekyll(args)
+def run_ngage(args)
   args = args.strip.split(" ") # Shellwords?
-  process = run_in_shell("ruby", Paths.jekyll_bin.to_s, *args, "--trace")
+  process = run_in_shell("ruby", Paths.ngage_bin.to_s, *args, "--trace")
   process.exitstatus.zero?
 end
 

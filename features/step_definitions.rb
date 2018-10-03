@@ -191,10 +191,10 @@ end
 
 #
 
-When(%r!^I run jekyll(.*)$!) do |args|
-  run_jekyll(args)
+When(%r!^I run ngage(.*)$!) do |args|
+  run_ngage(args)
   if args.include?("--verbose") || ENV["DEBUG"]
-    warn "\n#{jekyll_run_output}\n"
+    warn "\n#{ngage_run_output}\n"
   end
 end
 
@@ -203,7 +203,7 @@ end
 When(%r!^I run bundle(.*)$!) do |args|
   run_bundle(args)
   if args.include?("--verbose") || ENV["DEBUG"]
-    warn "\n#{jekyll_run_output}\n"
+    warn "\n#{ngage_run_output}\n"
   end
 end
 
@@ -212,7 +212,7 @@ end
 When(%r!^I run gem(.*)$!) do |args|
   run_rubygem(args)
   if args.include?("--verbose") || ENV["DEBUG"]
-    warn "\n#{jekyll_run_output}\n"
+    warn "\n#{ngage_run_output}\n"
   end
 end
 
@@ -358,9 +358,9 @@ end
 
 Then(%r!^I should (not )?see "(.*)" in the build output$!) do |negative, text|
   if negative.nil? || negative.empty?
-    expect(jekyll_run_output).to match Regexp.new(text)
+    expect(ngage_run_output).to match Regexp.new(text)
   else
-    expect(jekyll_run_output).not_to match Regexp.new(text)
+    expect(ngage_run_output).not_to match Regexp.new(text)
   end
 end
 
@@ -381,7 +381,7 @@ Then(%r!^I should get an updated git index$!) do
     my-cool-theme.gemspec
   )
   index.each do |file|
-    expect(jekyll_run_output).to match file
+    expect(ngage_run_output).to match file
   end
 end
 

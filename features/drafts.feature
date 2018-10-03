@@ -9,7 +9,7 @@ Feature: Draft Posts
     And I have the following draft:
       | title  | date       | layout  | content        |
       | Recipe | 2009-03-27 | default | Not baked yet. |
-    When I run jekyll build --drafts
+    When I run ngage build --drafts
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Not baked yet." in "_site/recipe.html"
@@ -21,7 +21,7 @@ Feature: Draft Posts
     And I have the following draft:
       | title  | date       | layout  | content        |
       | Recipe | 2009-03-27 | default | Not baked yet. |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/recipe.html" file should not exist
@@ -33,7 +33,7 @@ Feature: Draft Posts
     And I have the following draft:
       | title  | date       | layout  | published | content        |
       | Recipe | 2009-03-27 | default | false     | Not baked yet. |
-    When I run jekyll build --drafts
+    When I run ngage build --drafts
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/recipe.html" file should not exist
@@ -44,7 +44,7 @@ Feature: Draft Posts
     And I have the following draft:
       | title  | date       | layout | content                    |
       | Recipe | 2009-03-27 | simple | Post path: {{ page.path }} |
-    When I run jekyll build --drafts
+    When I run ngage build --drafts
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Post path: _drafts/recipe.markdown" in "_site/recipe.html"

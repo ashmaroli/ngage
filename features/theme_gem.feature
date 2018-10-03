@@ -4,12 +4,12 @@ Feature: Building Theme Gems
   In order to share my awesome style skillz with other Jekyllites
 
   Scenario: Generating a new Jekyll Theme
-    When I run jekyll new-theme my-cool-theme
+    When I run ngage new-theme my-cool-theme
     Then I should get a zero exit status
     And the my-cool-theme directory should exist
 
   Scenario: Checking if a bonafide Theme gem will be built from generated scaffolding
-    When I run jekyll new-theme my-cool-theme
+    When I run ngage new-theme my-cool-theme
     Then the my-cool-theme directory should exist
     When I decide to build the theme gem
     Then the "_includes/blank.html" file should exist

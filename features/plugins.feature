@@ -5,7 +5,7 @@ Feature: Configuring and using plugins
   Scenario: Add a gem-based plugin
     Given I have an "index.html" file that contains "Whatever"
     And I have a configuration file with "gems" set to "[jekyll_test_plugin]"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Whatever" in "_site/index.html"
@@ -17,7 +17,7 @@ Feature: Configuring and using plugins
       | key       | value                |
       | gems      | [jekyll_test_plugin] |
       | whitelist | []                   |
-    When I run jekyll build --safe
+    When I run ngage build --safe
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Whatever" in "_site/index.html"
@@ -29,7 +29,7 @@ Feature: Configuring and using plugins
       | key       | value                                              |
       | gems      | [jekyll_test_plugin, jekyll_test_plugin_malicious] |
       | whitelist | [jekyll_test_plugin]                               |
-    When I run jekyll build --safe
+    When I run ngage build --safe
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Whatever" in "_site/index.html"

@@ -7,7 +7,7 @@ Feature: Collections
     Given I have an "index.html" page that contains "Collections: {{ site.methods }}"
     And I have fixture collections
     And I have a configuration file with "collections" set to "['methods']"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/methods/configuration.html" file should not exist
@@ -23,7 +23,7 @@ Feature: Collections
         output: true
         foo:   bar
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Collections: output => true" in "_site/index.html"
@@ -41,7 +41,7 @@ Feature: Collections
         output: true
         permalink: /:collection/:path/
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<p>Whatever: foo.bar</p>" in "_site/methods/configuration/index.html"
@@ -57,7 +57,7 @@ Feature: Collections
         output: true
         foo:   bar
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Collections: output => true" in "_site/index.html"
@@ -74,7 +74,7 @@ Feature: Collections
     collections:
     - methods
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     Then the _site directory should exist
     And I should see "Collections: _methods/3940394-21-9393050-fifif1323-test.md _methods/collection/entries _methods/configuration.md _methods/escape-\+ #%20\[\].md _methods/sanitized_path.md _methods/site/generate.md _methods/site/initialize.md _methods/um_hi.md" in "_site/index.html" unless Windows
@@ -88,7 +88,7 @@ Feature: Collections
     collections:
     - methods
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     Then the _site directory should exist
     And I should see "Collections: _methods/3940394-21-9393050-fifif1323-test.md _methods/collection/entries _methods/configuration.md _methods/escape-\+ #%20\[\].md _methods/sanitized_path.md _methods/site/generate.md _methods/site/initialize.md _methods/um_hi.md" in "_site/index.html" unless Windows
@@ -106,12 +106,12 @@ Feature: Collections
       puppies:
         output: true
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "content for Rover" in "_site/puppies/rover.html"
     And the "_site/puppies/fido.html" file should not exist
-    When I run jekyll build --future
+    When I run ngage build --future
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/puppies/fido.html" file should exist
@@ -129,12 +129,12 @@ Feature: Collections
         output: true
     """
     And I have a "index.html" page that contains "Newest puppy: {% assign puppy = site.puppies.last %}{{ puppy.title }}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Newest puppy: Fido" in "_site/index.html"
     But the "_site/puppies/fido.html" file should not exist
-    When I run jekyll build --future
+    When I run ngage build --future
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Newest puppy: Fido" in "_site/index.html"
@@ -155,7 +155,7 @@ Feature: Collections
         output: true
     """
     And I have a "index.md" page that contains "{% for puppy in site.puppies %}<div>{{ puppy.title }}</div>{% endfor %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<div>Rover</div>" in "_site/index.html"
@@ -166,7 +166,7 @@ Feature: Collections
     And the "_site/puppies/figor.html" file should not exist
     And the "_site/puppies/snowy.html" file should not exist
     And the "_site/puppies/hardy.html" file should not exist
-    When I run jekyll build --future
+    When I run ngage build --future
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<div>Rover</div>" in "_site/index.html"
@@ -191,12 +191,12 @@ Feature: Collections
         output: false
     """
     And I have a "foo.txt" file that contains "random static file"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/puppies/rover.html" file should not exist
     And the "_site/puppies/fido.html" file should not exist
-    When I run jekyll build --future
+    When I run ngage build --future
     Then I should get a zero exit status
     And the _site directory should exist
     And the "_site/puppies/fido.html" file should not exist
@@ -214,12 +214,12 @@ Feature: Collections
         output: false
     """
     And I have a "index.html" page that contains "Newest puppy: {% assign puppy = site.puppies.last %}{{ puppy.title }}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Newest puppy: Fido" in "_site/index.html"
     But the "_site/puppies/fido.html" file should not exist
-    When I run jekyll build --future
+    When I run ngage build --future
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Newest puppy: Fido" in "_site/index.html"
@@ -240,7 +240,7 @@ Feature: Collections
         output: false
     """
     And I have a "index.md" page that contains "{% for puppy in site.puppies %}<div>{{ puppy.title }}</div>{% endfor %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<div>Rover</div>" in "_site/index.html"
@@ -251,7 +251,7 @@ Feature: Collections
     And the "_site/puppies/figor.html" file should not exist
     And the "_site/puppies/snowy.html" file should not exist
     And the "_site/puppies/hardy.html" file should not exist
-    When I run jekyll build --future
+    When I run ngage build --future
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<div>Rover</div>" in "_site/index.html"
@@ -278,7 +278,7 @@ Feature: Collections
         output: true
     """
     And I have a "index.md" page that contains "{% for puppy in site.puppies %}<div>{{ puppy.title }}</div>{% endfor %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<div>Rover</div>" in "_site/index.html"
@@ -289,7 +289,7 @@ Feature: Collections
     And the "_site/puppies/snowy.html" file should not exist
     And the "_site/puppies/figor.html" file should not exist
     And the "_site/puppies/hardy.html" file should not exist
-    When I run jekyll build --unpublished
+    When I run ngage build --unpublished
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<div>Rover</div>" in "_site/index.html"
@@ -300,7 +300,7 @@ Feature: Collections
     And the "_site/puppies/snowy.html" file should not exist
     And the "_site/puppies/figor.html" file should exist
     And the "_site/puppies/hardy.html" file should not exist
-    When I run jekyll build --unpublished --future
+    When I run ngage build --unpublished --future
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<div>Rover</div>" in "_site/index.html"
@@ -327,7 +327,7 @@ Feature: Collections
         output: false
     """
     And I have a "index.md" page that contains "{% for puppy in site.puppies %}<div>{{ puppy.title }}</div>{% endfor %}"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<div>Rover</div>" in "_site/index.html"
@@ -338,7 +338,7 @@ Feature: Collections
     And the "_site/puppies/snowy.html" file should not exist
     And the "_site/puppies/figor.html" file should not exist
     And the "_site/puppies/hardy.html" file should not exist
-    When I run jekyll build --unpublished
+    When I run ngage build --unpublished
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<div>Rover</div>" in "_site/index.html"
@@ -349,7 +349,7 @@ Feature: Collections
     And the "_site/puppies/snowy.html" file should not exist
     And the "_site/puppies/figor.html" file should not exist
     And the "_site/puppies/hardy.html" file should not exist
-    When I run jekyll build --unpublished --future
+    When I run ngage build --unpublished --future
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<div>Rover</div>" in "_site/index.html"
@@ -369,7 +369,7 @@ Feature: Collections
     collections:
     - methods
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     Then the _site directory should exist
     And I should see "All documents: _methods/3940394-21-9393050-fifif1323-test.md _methods/collection/entries _methods/configuration.md _methods/escape-\+ #%20\[\].md _methods/sanitized_path.md _methods/site/generate.md _methods/site/initialize.md _methods/um_hi.md" in "_site/index.html" unless Windows
@@ -383,7 +383,7 @@ Feature: Collections
     collections:
     - methods
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     Then the _site directory should exist
     And I should see "Second document's output: <p>Use <code class=\"highlighter-rouge\">Jekyll.configuration</code> to build a full configuration for use w/Jekyll.</p>\n\n<p>Whatever: foo.bar</p>" in "_site/index.html"
@@ -396,7 +396,7 @@ Feature: Collections
     collections:
     - methods
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Item count: 2" in "_site/index.html"
@@ -409,7 +409,7 @@ Feature: Collections
     collections:
     - methods
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "2. of 9: <p>Page without title.</p>" in "_site/index.html" unless Windows
@@ -423,7 +423,7 @@ Feature: Collections
     collections:
     - methods
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     Then the _site directory should exist
     And I should see "Collections: this is a test!, Collection#entries, Jekyll.configuration, Jekyll.escape, Jekyll.sanitized_path, Site#generate, Initialize, Site#generate, YAML with Dots" in "_site/index.html" unless Windows
@@ -438,7 +438,7 @@ Feature: Collections
       thanksgiving:
         output: true
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Thanksgiving Black Friday" in "_site/index.html"

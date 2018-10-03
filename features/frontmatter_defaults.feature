@@ -11,7 +11,7 @@ Feature: frontmatter defaults
 
     And I have a configuration file with "defaults" set to "[{scope: {path: ""}, values: {layout: "pretty"}}]"
 
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "THIS IS THE LAYOUT: <p>just some post</p>" in "_site/2013/09/11/default-layout.html"
@@ -24,7 +24,7 @@ Feature: frontmatter defaults
       | default data | 2013-09-11 | <p>{{page.custom}}</p><div>{{page.author}}</div> |
     And I have an "index.html" page that contains "just {{page.custom}} by {{page.author}}"
     And I have a configuration file with "defaults" set to "[{scope: {path: ""}, values: {custom: "some special data", author: "Ben"}}]"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "<p>some special data</p>\n<div>Ben</div>" in "_site/2013/09/11/default-data.html"
@@ -49,7 +49,7 @@ Feature: frontmatter defaults
 
     And I have a configuration file with "defaults" set to "[{scope: {path: "special"}, values: {layout: "subfolder", description: "the special section"}}, {scope: {path: ""}, values: {layout: "root", description: "the webpage"}}]"
 
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "root: <p>info on the webpage</p>" in "_site/2013/10/14/about.html"
@@ -73,7 +73,7 @@ Feature: frontmatter defaults
 
     And I have a configuration file with "defaults" set to "[{scope: {path: "special"}, values: {layout: "main"}}, {scope: {path: "special/_posts"}, values: {layout: "main"}}, {scope: {path: "_posts"}, values: {layout: "main"}}]"
 
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "main: <p>content of site/2013/10/14/about.html</p>" in "_site/2013/10/14/about.html"
@@ -95,7 +95,7 @@ Feature: frontmatter defaults
 
     And I have a configuration file with "defaults" set to "[{scope: {path: "_posts/en"}, values: {layout: "main", lang: "en"}}, {scope: {path: "_posts/de"}, values: {layout: "main", lang: "de"}}]"
 
-    When I run jekyll build
+    When I run ngage build
     Then the _site directory should exist
     And I should see "main: <p>en is the current language</p>" in "_site/2014/09/01/helloworld.html"
     And I should see "main: <p>de is the current language</p>" in "_site/2014/09/01/hallowelt.html"
@@ -107,7 +107,7 @@ Feature: frontmatter defaults
       | this is a post | 2013-10-14 | blabla  |
     And I have an "index.html" page that contains "interesting stuff"
     And I have a configuration file with "defaults" set to "[{scope: {path: "", type: "post"}, values: {permalink: "/post.html"}}, {scope: {path: "", type: "page"}, values: {permalink: "/page.html"}}, {scope: {path: ""}, values: {permalink: "/perma.html"}}]"
-    When I run jekyll build
+    When I run ngage build
     Then I should see "blabla" in "_site/post.html"
     And I should see "interesting stuff" in "_site/page.html"
     But the "_site/perma.html" file should not exist
@@ -119,7 +119,7 @@ Feature: frontmatter defaults
       | override | 2013-10-14 | /frontmatter.html | some guy | a blog by {{page.author}} |
     And I have an "index.html" page with permalink "override.html" that contains "nothing"
     And I have a configuration file with "defaults" set to "[{scope: {path: ""}, values: {permalink: "/perma.html", author: "Chris"}}]"
-    When I run jekyll build
+    When I run ngage build
     Then I should see "a blog by some guy" in "_site/frontmatter.html"
     And I should see "nothing" in "_site/override.html"
     But the "_site/perma.html" file should not exist
@@ -130,7 +130,7 @@ Feature: frontmatter defaults
       | title          | date       | category | content |
       | testpost       | 2013-10-14 | blog     | blabla  |
     And I have a configuration file with "defaults" set to "[{scope: {path: "", type: "posts"}, values: {permalink: "/:categories/:title/"}}]"
-    When I run jekyll build
+    When I run ngage build
     Then I should see "blabla" in "_site/blog/testpost/index.html"
 
   Scenario: Use frontmatter defaults in collections
@@ -155,7 +155,7 @@ Feature: frontmatter defaults
           values:
             myval: "Test"
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Value: Test" in "_site/slides/slide1.html"
@@ -183,7 +183,7 @@ Feature: frontmatter defaults
           values:
             myval: "Test"
     """
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Value: Override" in "_site/slides/slide2.html"
@@ -191,5 +191,5 @@ Feature: frontmatter defaults
   Scenario: Deep merge frontmatter defaults
     Given I have an "index.html" page with fruit "{orange: 1}" that contains "Fruits: {{ page.fruit.orange | plus: page.fruit.apple }}"
     And I have a configuration file with "defaults" set to "[{scope: {path: ""}, values: {fruit: {apple: 2}}}]"
-    When I run jekyll build
+    When I run ngage build
     Then I should see "Fruits: 3" in "_site/index.html"

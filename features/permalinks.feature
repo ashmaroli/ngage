@@ -9,7 +9,7 @@ Feature: Fancy permalinks
       | title                 | date       | content          |
       | None Permalink Schema | 2009-03-27 | Totally nothing. |
     And I have a configuration file with "permalink" set to "none"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Totally nothing." in "_site/none-permalink-schema.html"
@@ -20,7 +20,7 @@ Feature: Fancy permalinks
       | title                   | date       | content            |
       | Pretty Permalink Schema | 2009-03-27 | Totally wordpress. |
     And I have a configuration file with "permalink" set to "pretty"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Totally wordpress." in "_site/2009/03/27/pretty-permalink-schema/index.html"
@@ -30,7 +30,7 @@ Feature: Fancy permalinks
     And I have an "awesome.html" page that contains "Totally awesome"
     And I have an "sitemap.xml" page that contains "Totally uhm, sitemap"
     And I have a configuration file with "permalink" set to "pretty"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Totally index" in "_site/index.html"
@@ -43,7 +43,7 @@ Feature: Fancy permalinks
       | title                   | category | date       | content         |
       | Custom Permalink Schema | stuff    | 2009-03-27 | Totally custom. |
     And I have a configuration file with "permalink" set to "/blog/:year/:month/:day/:title/"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Totally custom." in "_site/blog/2009/03/27/custom-permalink-schema/index.html"
@@ -54,7 +54,7 @@ Feature: Fancy permalinks
       | title                   | category | date       | content         |
       | Custom Permalink Schema | stuff    | 2009-03-27 | Totally custom. |
     And I have a configuration file with "permalink" set to "/:categories/:title.html"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Totally custom." in "_site/stuff/custom-permalink-schema.html"
@@ -65,7 +65,7 @@ Feature: Fancy permalinks
       | title                   | category | date       | content         |
       | Custom Permalink Schema | stuff    | 2009-03-27 | Totally custom. |
     And I have a configuration file with "permalink" set to "/:month-:day-:year/:title.html"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Totally custom." in "_site/03-27-2009/custom-permalink-schema.html"
@@ -79,7 +79,7 @@ Feature: Fancy permalinks
     And I have the following post:
       | title                   | category | date                | content         |
       | Custom Permalink Schema | stuff    | 2009-03-27 22:31:07 | Totally custom. |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Totally custom." in "_site/20090327223107.html"
@@ -89,7 +89,7 @@ Feature: Fancy permalinks
     And I have the following post:
       | title     | date       | permalink       | content |
       | Some post | 2013-04-14 | /custom/posts/1/ | bla bla |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the _site/custom/posts/1 directory should exist
@@ -100,7 +100,7 @@ Feature: Fancy permalinks
     And I have the following post:
       | title     | date       | permalink               | content |
       | Some post | 2013-04-14 | /custom/posts/some.html | bla bla |
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And the _site/custom/posts directory should exist
@@ -110,7 +110,7 @@ Feature: Fancy permalinks
     Given I have a _posts directory
     And I have an "_posts/2009-03-27-Pretty-Permalink-Schema.md" page that contains "Totally wordpress"
     And I have a configuration file with "permalink" set to "pretty"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Totally wordpress." in "_site/2009/03/27/Pretty-Permalink-Schema/index.html"
@@ -119,7 +119,7 @@ Feature: Fancy permalinks
     Given I have a _posts directory
     And I have an "_posts/2009-03-27-Custom-Schema.md" page with title "Custom Schema" that contains "Totally awesome"
     And I have a configuration file with "permalink" set to "/:year/:month/:day/:slug/"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Totally awesome" in "_site/2009/03/27/custom-schema/index.html"
@@ -128,7 +128,7 @@ Feature: Fancy permalinks
     Given I have a _posts directory
     And I have an "_posts/2009-03-27-Custom_Schema.md" page with title "Custom Schema" that contains "Totally awesome"
     And I have a configuration file with "permalink" set to "pretty"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "Totally awesome" in "_site/2009/03/27/Custom_Schema/index.html"
@@ -137,7 +137,7 @@ Feature: Fancy permalinks
     Given I have a _posts directory
     And I have an "_posts/2016-01-18-i-am-php.md" page with permalink "/2016/i-am-php.php" that contains "I am PHP"
     And I have a "i-am-also-php.md" page with permalink "/i-am-also-php.php" that contains "I am also PHP"
-    When I run jekyll build
+    When I run ngage build
     Then I should get a zero exit status
     And the _site directory should exist
     And I should see "I am PHP" in "_site/2016/i-am-php.php"
