@@ -91,6 +91,7 @@ module Jekyll
       self.pages = []
       self.static_files = []
       self.data = {}
+      @post_attr_hash = {}
       @site_data = nil
       @collections = nil
       @docs_to_write = nil
@@ -230,12 +231,14 @@ module Jekyll
     def post_attr_hash(post_attr)
       # Build a hash map based on the specified post attribute ( post attr =>
       # array of posts ) then sort each array in reverse order.
-      hash = Hash.new { |h, key| h[key] = [] }
-      posts.docs.each do |p|
-        p.data[post_attr]&.each { |t| hash[t] << p }
+      @post_attr_hash[post_attr] ||= begin
+        hash = Hash.new { |h, key| h[key] = [] }
+        posts.docs.each do |p|
+          p.data[post_attr]&.each { |t| hash[t] << p }
+        end
+        hash.each_value { |posts| posts.sort!.reverse! }
+        hash
       end
-      hash.each_value { |posts| posts.sort!.reverse! }
-      hash
     end
 
     def tags
