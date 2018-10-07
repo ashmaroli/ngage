@@ -229,21 +229,18 @@ module Jekyll
     # Returns the filtered array of objects
     def sort(input, property = nil, nils = "first")
       raise ArgumentError, "Cannot sort a null object." if input.nil?
+      return input.sort if property.nil?
 
-      if property.nil?
-        input.sort
+      if nils == "first"
+        order = - 1
+      elsif nils == "last"
+        order = + 1
       else
-        if nils == "first"
-          order = - 1
-        elsif nils == "last"
-          order = + 1
-        else
-          raise ArgumentError, "Invalid nils order: " \
-            "'#{nils}' is not a valid nils order. It must be 'first' or 'last'."
-        end
-
-        sort_input(input, property, order)
+        raise ArgumentError, "Invalid nils order: '#{nils}' is not a valid nils order. " \
+        "It must be 'first' or 'last'."
       end
+
+      sort_input(input, property, order)
     end
 
     def pop(array, num = 1)
@@ -284,11 +281,7 @@ module Jekyll
       return input unless input.respond_to?(:sample)
 
       num = Liquid::Utils.to_integer(num) rescue 1
-      if num == 1
-        input.sample
-      else
-        input.sample(num)
-      end
+      num == 1 ? input.sample : input.sample(num)
     end
 
     # Convert an object into its String representation for debugging
@@ -360,17 +353,11 @@ module Jekyll
       when Array
         item.map { |i| as_liquid(i) }
       else
-        if item.respond_to?(:to_liquid)
-          liquidated = item.to_liquid
-          # prevent infinite recursion for simple types (which return `self`)
-          if liquidated == item
-            item
-          else
-            as_liquid(liquidated)
-          end
-        else
-          item
-        end
+        return item unless item.respond_to?(:to_liquid)
+
+        liquidated = item.to_liquid
+        # prevent infinite recursion for simple types (which return `self`)
+        liquidated == item ? item : as_liquid(liquidated)
       end
     end
 
@@ -407,6 +394,4 @@ module Jekyll
   end
 end
 
-Liquid::Template.register_filter(
-  Jekyll::Filters
-)
+Liquid::Template.register_filter(Jekyll::Filters)
