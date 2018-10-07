@@ -306,12 +306,16 @@ module Jekyll
     # If the property doesn't exist, return the sort order respective of
     # which item doesn't have the property.
     # We also utilize the Schwartzian transform to make this more efficient.
+    #
+    # rubocop:disable Metrics/AbcSize
     def sort_input(input, property, order)
-      input.map { |item| [item_property(item, property), item] }
-        .sort! do |a_info, b_info|
+      @sort_input_cache ||= {}
+      @sort_input_cache[property] ||= {}
+      @sort_input_cache[property][order] ||= {}
+      @sort_input_cache[property][order][input.hash] ||= begin
+        input.map { |item| [item_property(item, property), item] }.sort! do |a_info, b_info|
           a_property = a_info.first
           b_property = b_info.first
-
           if !a_property.nil? && b_property.nil?
             - order
           elsif a_property.nil? && !b_property.nil?
@@ -319,9 +323,10 @@ module Jekyll
           else
             a_property <=> b_property || a_property.to_s <=> b_property.to_s
           end
-        end
-        .map!(&:last)
+        end.map!(&:last)
+      end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def item_property(item, property)
       if item.respond_to?(:to_liquid)
