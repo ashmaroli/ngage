@@ -42,6 +42,10 @@ module Jekyll
       @stats[filename][:time] += time
     end
 
+    def increment_count(filename)
+      @stats[filename][:count] += 1
+    end
+
     def stats_table(num_of_rows = 50)
       LiquidRenderer::Table.new(@stats).to_s(num_of_rows)
     end

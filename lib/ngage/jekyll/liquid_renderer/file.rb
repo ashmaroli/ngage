@@ -19,7 +19,9 @@ module Jekyll
       def render(*args)
         measure_time do
           measure_bytes do
-            @template.render(*args)
+            measure_counts do
+              @template.render(*args)
+            end
           end
         end
       end
@@ -27,7 +29,9 @@ module Jekyll
       def render!(*args)
         measure_time do
           measure_bytes do
-            @template.render!(*args)
+            measure_counts do
+              @template.render!(*args)
+            end
           end
         end
       end
@@ -37,6 +41,11 @@ module Jekyll
       end
 
       private
+
+      def measure_counts
+        @renderer.increment_count(@filename)
+        yield
+      end
 
       def measure_bytes
         yield.tap do |str|
